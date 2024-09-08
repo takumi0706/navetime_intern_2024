@@ -234,7 +234,7 @@ Vue.js, HTML, CSS, JavaScriptの基礎を学ぶためのリポジトリ
 - border
   - 要素の境界線(線の色、線のスタイル、線の太さ)を指定する
 
-## スタイル指定
+## スタイル指定(Chapter 04)
 
 ### styleの書き方
 **サンプルコード**
@@ -443,7 +443,392 @@ Vue.js, HTML, CSS, JavaScriptの基礎を学ぶためのリポジトリ
   - 要素の内側の余白を指定する
 
 ![img.png](img.png)
+<br/>
 出典 : https://saruwakakun.com/html-css/basic/margin-padding
+
+## JavaScriptとは(Chapter 05)
+
+### JavaScriptとは
+- Webページの動きを記述するプログラミング言語
+- 要素を変更したり、通信処理を行うことができる
+- ブラウザ上で動作する
+
+## JavaScriptの基本構文(Chapter 06)
+
+### 変数宣言
+変数は、letまたはconstを用いて宣言する
+
+|       | 特徴    |
+|-------|-------|
+| const | 再代入不可 |
+| let   | 再代入可能 |
+
+**サンプルコード**
+```vue
+let text1 = 'りんご';
+alert(text1); // りんご
+text1 = 'バナナ'; -> 再代入可能
+
+const text2 = 'りんご';
+alert(text2); // りんご
+text2 = 'バナナ'; -> エラー(再代入不可)
+```
+
+### 主な変数の型
+
+| 型         | 意味             |
+|-----------|----------------|
+| String    | 文字列('や"で囲む)    |
+| Number    | 数値(整数・小数)      |
+| Boolean   | 真偽値 true/false |
+| undefined | 未定義状態          |
+| null      | null           |
+
+**サンプルコード**
+```javascript
+const a = 'Hello'; // String
+const b = 1.23; // Number
+const c = true; // Boolean
+
+const d = undefined; // undefined
+const e = null; // null
+```
+この他にも型はある
+
+### Object連想配列(key, valueの組み)
+
+オブジェクトは、キーとバリューの関係で成り立つ変数.キーの型でバリューにアクセスできる
+
+**サンプルコード**
+```javascript
+const company = {
+  name: 'NAVITIME',
+  location: '東京',
+  employee: 1000
+};
+
+console.log(company.name); // NAVITIME
+console.log(company.id); // undefined
+```
+
+company.nameは定義されているから表示されるが、company.idは定義されていないからundefinedが表示される
+
+
+### 配列
+
+配列は、複数の値を1つのデータ（変数）として扱えることが特徴
+
+**サンプルコード**
+```javascript
+const array = [1, 2, 3];
+console.log(array[0]); // 1
+
+const min = [true, 'a', 3.14];
+console.log(min[1]); // a
+
+const list = [1,2,3,4,5,6,7,8];
+console.log(list.length); // 8
+
+const items = [
+  { id: 1, name: 'HTML'},
+  {id: 2, name: 'CSS'},
+];
+console.log(items[0].id); // 1
+items.forEach(function (item) { 
+    console.log(item.name) // HTML, CSS
+})
+```
+
+### 関数
+
+入力に対して出力を返す処理のまとまり<br/>
+関数自体のメリット：同じ処理を一つにまとめることができる
+
+**サンプルコード**
+```javascript
+function sum(a, b) {
+  return a + b;
+}
+
+console.log(sum(1, 2)); // 3
+
+function get(path, params) {
+  return axios.get(path + params);
+}
+
+get(path, params); // ページ読込み時やクイックイベント時に使える
+```
+
+## Vue.js
+
+### 基本的な構文
+
+- 1つのファイルに3つの言語を書く
+
+**サンプルコード**
+```vue
+<script setup> // <- <script>タグの間にJavaScriptを記述
+  import { ref } from 'vue'
+  const count = ref(0)
+</script>
+
+<template> // <- <template>タグの間にHTMLを記述
+  <button @click="count++">
+    Count is: {{ count }}
+  </button>
+</template>
+
+<style scoped> // <- <style>タグの間にCSSを記述
+  button {
+    font-weight: bold;
+  }
+</style>
+```
+
+### 変数の表示
+
+- **script**内で定義した変数の値をHTMLで表示するには、**template**内で二重中括弧（マスタッシュ構文）を利用
+>マスタッシュ構文 <br/>
+> {{ 変数名 }}
+
+**サンプルコード**
+```vue
+<script setup>
+  const currentTime = new Date(); // 現在の日時を取得
+</script>
+
+<template>
+  <p>今日の日時：{{ currentTime }}</p>
+</template>
+```
+
+**ブラウザ表示**
+> 今日の日時：Thu Jun 22 2023 12:00:00 GMT+0900 (日本標準時)
+
+### 配列の表示
+- 配列に基づいて要素を繰り返す場合にはv-forを利用する
+
+> v-for(繰り返し構造) <br/>
+> 繰り返したいHTML要素に <br/>
+> ```javascript
+> v-for="(item, index) in 配列" :key="index"
+> ```
+
+**サンプルコード**
+```vue
+<script setup>
+  const items = [
+    { message: 'dog' },
+    { message: 'cat' },
+    { message: 'bird' }
+  ];
+</script>
+
+<template>
+  <ul>
+    <li v-for="(item, index) in items" :key="index">
+      {{ item.message }}
+    </li>
+  </ul>
+</template>
+```
+
+**ブラウザ表示**
+> - dog
+> - cat
+> - bird
+
+### 表示切り替え
+- 表示を条件で切り替えたいときはv-ifを利用する
+
+> v-if(条件分岐) <br/>
+> 表示切り返したHTML要素に <br/>
+> ```javascript
+> v-if="条件式やboolean変数"
+> ```
+
+**サンプルコード**
+```vue
+<script setup>
+  const isVisible = true;
+  const foo = 'foo';
+</script>
+
+<template>
+  <div>
+    <div v-if="isVisible">
+      <p>複数要素</p>
+      <p>出す場合</p>
+    </div>
+    <p v-if="foo === 'foo'">{{ foo }}</p>
+    <p v-else-if="foo.length >= 3">3文字以上です</p>
+    <p v-else>fooでも3文字以上でもない</p>
+  </div>
+</template>
+```
+
+**ブラウザ表示**
+> 複数要素 <br/>
+> 出す場合 <br/>
+> foo
+
+### イベントハンドラ
+
+- イベント(ユーザーのアクション)の発生時に、実行したい処理(イベントハンドラ)を要素に登録するにはv-on:イベント名、または省略して@イベント名を利用
+
+> v-on(イベントハンドラ) <br/>
+> イベントをハンドリングしたい要素に <br/>
+> ```javascript
+> @イベント名="イベント時実行したいメソッド名"
+> ```
+> クリックイベントをハンドリングしたい要素に <br/>
+> ```javascript
+> @click="クリック時に実行したいメソット名"
+> ```
+
+**サンプルコード**
+```vue
+<script setup>
+  const displayAlert = () => {
+    alert('Hello, Vue.js');
+  };
+</script>
+
+<template>
+  <button @click="displayAlert">
+    Click me
+  </button>
+</template>
+```
+
+**ブラウザ表示**
+> ![img_1.png](img_1.png)
+
+### 変数の管理
+- 変数が変更された時に、htmlの表示も変更されるようにするには、リアクティビティ(reactivity)という仕組みを利用する　
+<br/>
+[リアクティビティーの探求](https://ja.vuejs.org/guide/extras/reactivity-in-depth)
+<br/>
+<br/>
+リアクティブな値は以下の2通りの方法で作ることができる
+> ref, reactive(リアクティビティ)
+> ```javascript
+> const hoge = ref(初期値);
+> const fuga = reactive(初期値);
+> ```
+
+- string型やnumber型などの値の変更を画面に反映したいときは、refを利用する
+
+**サンプルコード(refを利用しない場合)**
+```vue
+<script setup>
+  let count = 0;
+  
+  const increment = () => {
+    count++;
+  };
+</script>
+
+<template>
+  <button @click="increment">
+    {{ count }}
+  </button>
+</template>
+```
+
+**ブラウザ表示**
+> ![img_2.png](img_2.png) <br/>
+
+**サンプルコード(refを利用した場合)**
+```vue
+<script setup>
+  import { ref } from 'vue';
+  const count = ref(0);
+  
+  const increment = () => {
+    count.value++;
+  };
+</script>
+
+<template>
+  <button @click="increment">
+    {{ count }}
+  </button>
+</template>
+```
+
+**ブラウザ表示**
+> ![img_3.png](img_3.png) <br/>
+
+### 入力内容の動機
+- ユーザーが入力フォームに入力した値を使用したい場合は、v-modelを利用して変数と同期させる
+
+> v-model(入力内容同期) <br/>
+> 入力内容を使用したいinputタグに <br/>
+> ```javascript
+> v-model="入力内容を同期させたい変数名"
+> ```
+
+**サンプルコード**
+```vue
+<script setup>
+  import { ref } from 'vue';
+  const username = ref('');
+  
+  <template>
+    <div>
+      <form>
+        <input type="text" v-model="username">
+      </form>
+      <p>
+        ユーザー名：{{ username }} <br/>
+      </p>
+    </div>
+  </template>
+```
+
+**ブラウザ表示**
+> ![img_4.png](img_4.png) <br/>
+
+### デザインを変更する
+- デザインを動的に変化させる場合は:classを利用する
+
+> :class <br/>
+> デザインを変更したい要素に <br/>
+> ```javascript
+> :class="{ 'クラス名': 条件式やbooleanの変数 }";
+> ```
+
+**サンプルコード**
+```vue
+<script setup>
+  import { ref } from 'vue';
+  
+  const isActive = ref(false);
+  
+  const changeColor = () => {
+    isActive.value = !isActive.value;　// isActiveがtrueの時に、classにactiveが付与される
+  };
+</script>
+
+<template>
+  <button :class="{'yellow-button' : isActive}" @click="changeColor">
+    押したら色が変わる
+  </button>
+</template>
+
+<style>
+  .yellow-button {
+    background-color: yellow;
+  }
+</style>
+```
+
+**ブラウザ表示**
+> ![img_5.png](img_5.png) <br/>
+
+## 演習問題(Chapter 07)
+
 
 
 

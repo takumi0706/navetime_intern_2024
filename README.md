@@ -567,18 +567,18 @@ get(path, params); // ページ読込み時やクイックイベント時に使�
 
 **サンプルコード**
 ```vue
-<script setup> // <- <script>タグの間にJavaScriptを記述
+<script setup> // <- scriptタグの間にJavaScriptを記述
   import { ref } from 'vue'
   const count = ref(0)
 </script>
 
-<template> // <- <template>タグの間にHTMLを記述
+<template>  // <- templateタグの間にHTMLを記述
   <button @click="count++">
     Count is: {{ count }}
   </button>
 </template>
 
-<style scoped> // <- <style>タグの間にCSSを記述
+<style scoped> // <- styleタグの間にCSSを記述
   button {
     font-weight: bold;
   }
@@ -829,6 +829,18 @@ get(path, params); // ページ読込み時やクイックイベント時に使�
 
 ## 演習問題(Chapter 07)
 
+### HTML/CSSを使てみよう
 
+> 要素 <br/>
+
+templateタグの中にHTML、styleタグの中にCSSを記述して右の見本のようなToDoリストの見た目を作成しなさい
+
+
+**使用してほしいHTMLタグ** <br/>
+見出し、順序なしリストタグ、チェックボックス、入力欄（テキスト）、ボタン
+
+> 見本 <br/>
+> <br/>
+> ![img_6.png](img_6.png) <br/>
 
 

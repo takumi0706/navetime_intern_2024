@@ -840,5 +840,88 @@ templateタグの中にHTML、styleタグの中にCSSを記述して右の見本
 > 見本 <br/>
 > <br/>
 > ![img_6.png](img_6.png) <br/>
+> リストの大枠はulタグ
+> ToDoのカードはliタグで作成すること
+
+### v-○○を使ってみよう
+
+> 要件
+
+scriptタグに以下を記述しなさい。
+
+```vue
+
+<script setup>
+  import {reactive} from "@vue/reactivity";
+
+  const toDolist = reactive([
+    {
+        title: "プログラミングテスト",
+        isDone: false
+    },
+    {
+        title: "ランニング",
+        isDone: true
+    },
+  ]);
+</script>
+```
+
+さらにこのtoDoListを使ってToDoリストの中身を表示しなさい。
+
+> 見本
+
+![img_7.png](img_7.png)
+liタグに対して`v-for`を使用すること。
+
+チェックボックスの`v-model`に`isDone`を指定して、`true`の時にチェックされるようにすること。
+
+### イベントハンドラを使ってみよう
+
+> 要件
+
+追加ボタンを押したときにToDoリストを追加できるようにしなさい
+
+> 見本
+
+![img_8.png](img_8.png)
+
+### 動的にスタイルを変更しよう
+
+>　要件
+
+チェックボックスをチェックしたら、その行のスタイルを見本のように変更できるようにしなさい。
+
+> 見本
+
+![img_9.png](img_9.png)
+
+
+# まとめ
+
+## まとめ
+
+### Webページの構成
+
+- HTML
+  - ページの構成を作成
+- CSS
+  - ページの見た目を整える
+- JavaScript
+  - ページの動きを制御
+
+### Vue.js
+
+- Webページを簡単に作るためのフレームワーク
+
+## インターン当日について
+
+### インターン当日
+
+- 下記のAPIを利用して、webサイトを自由に作成する
+  - [API仕様書](https://api-sdk.navitime.co.jp/api/specs/api_guide/route_index.html)
+    - APIについては当日講義形式で詳しく説明するが、インターネットを通じてデータを取得する方法の1つ
+- 予めどんなサービスを作るかアイデアを膨らませてみよう。
+
 
 

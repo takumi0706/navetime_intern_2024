@@ -1,5 +1,34 @@
 <script setup>
+import { reactive, ref } from "@vue/reactivity";
 
+// ToDoリストの初期値
+const toDolist = reactive([
+  {
+    title: "プログラミングテスト",
+    isDone: false
+  },
+  {
+    title: "ランニング",
+    isDone: true
+  },
+]);
+
+const changeColor = (index) => {
+  toDolist[index].isDone = !toDolist[index].isDone;
+}
+
+// 新しいタスクのタイトルを保持用の変数
+const newTask = ref('');
+
+const addList = () =>{
+  if (newTask.value.trim() !=='') {
+    toDolist.push({
+      title: newTask.value,
+      isDone: false
+    });
+    newTask.value = '';
+  }
+};
 </script>
 
 <template>
@@ -8,19 +37,17 @@
       <h1 class="headline_1">ToDo</h1>
       <form class="todo_list">
         <ul>
-          <li>
-            <label for="task1">期末試験</label>
-            <input type="checkbox" id="task1"/>
-          </li>
-          <li>
-            <label for="task2">宿題</label>
-            <input type="checkbox" id="task2"/>
+          <li v-for="(task, index) in toDolist" :key="index" :class="{'list-changeColor' : task.isDone }" @click="changeColor(index)" >
+            <label for="task {{index}}">{{ task.title }}</label>
+              <input v-if="task.isDone" type="checkbox" checked>
+              <input v-else type="checkbox">
+
           </li>
         </ul>
       </form>
-      <form class="add_task_form">
-      <input type="text" placeholder="新しいタスクを入力">
-      <button>追加</button>
+      <form class="add_task_form" @submit.prevent="addList">
+      <input v-model="newTask" type="text" placeholder="新しいタスクを入力">
+      <button type="submit">追加</button>
       </form>
     </div>
   </div>
@@ -31,7 +58,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
 }
 
 .todolist_wrapper {
@@ -39,8 +65,8 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px lightblue;
   padding: 20px;
-  height: 600px;
-  width: 400px;
+  height: 90vh;
+  width: 80vh;
   display: flex;
   flex-direction: column;
 }
@@ -82,12 +108,12 @@
 
 .todo_list label {
   flex-grow: 1;
-  margin-right: 10px;
+  margin-right: 15px;
 }
 
 .todo_list input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
 }
 
 .add_task_form {
@@ -115,5 +141,11 @@
 
 .add_task_form button:hover {
   background-color: darkcyan;
+}
+
+.list-changeColor{
+  background-color: powderblue !important;
+  border: 1px solid powderblue !important;
+  color: white !important;
 }
 </style>

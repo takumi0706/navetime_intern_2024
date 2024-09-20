@@ -921,7 +921,6 @@ liタグに対して`v-for`を使用すること。
 - 下記のAPIを利用して、webサイトを自由に作成する
   - [API仕様書](https://api-sdk.navitime.co.jp/api/specs/api_guide/route_index.html)
     - APIについては当日講義形式で詳しく説明するが、インターネットを通じてデータを取得する方法の1つ
-- 予めどんなサービスを作るかアイデアを膨らませてみよう。
 
 
 
